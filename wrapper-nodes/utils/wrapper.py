@@ -11,40 +11,39 @@ class Wrapper:
     _pubQueryEngine = None
 
     @staticmethod
-    def __sendSubscribers(query):
+    def __sendSubscribers(sample):
         try:
             subs = str(Wrapper._session.info.zid()) + " "
             for sub in Wrapper._subs:
                 subs += sub
                 subs += "\n"
-            query.reply(
-                key_expr=query.selector.key_expr,
+            Wrapper._session.put(
+                key_expr=str(sample.key_expr) + "/reply",
                 payload=subs
             )
-            query.drop()
         except Exception as e:
             print(e)
+    
 
     @staticmethod
-    def __sendPublishers(query):
+    def __sendPublishers(sample):
         try:
             pubs = str(Wrapper._session.info.zid()) + " "
             for pub in Wrapper._pubs:
                 pubs += pub
                 pubs += "\n"
-            query.reply(
-                key_expr=query.selector.key_expr,
+            Wrapper._session.put(
+                key_expr=str(sample.key_expr) + "/reply",
                 payload=pubs
             )
-            query.drop()
         except Exception as e:
             print(e)
 
     @classmethod
     def open(cls, *args, **kwargs):
         cls._session = zenoh.open(*args, **kwargs)
-        cls._subQueryEngine = cls._session.declare_queryable("@cmpe491/subscribers", handler=cls.__sendSubscribers)
-        cls._pubQueryEngine = cls._session.declare_queryable("@cmpe491/publishers", handler=cls.__sendPublishers)
+        cls._subQueryEngine = cls._session.declare_subscriber("@cmpe491/subscribers", handler=cls.__sendSubscribers)
+        cls._pubQueryEngine = cls._session.declare_subscriber("@cmpe491/publishers", handler=cls.__sendPublishers)
         print(cls._session.info.zid())
 
 

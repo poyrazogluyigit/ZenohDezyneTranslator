@@ -23,53 +23,46 @@ def prettyPrint(topics):
                 for pub in pubList[pubType]:
                     print(f"\t\t\t- {pub}")
 
+
+def callback(sample):
+    print(f">> Received ('{sample.key_expr}': '{sample.payload.to_string()}')")
+    # match = re.findall(subPattern, str(reply.ok.key_expr))
+    # if match:
+    #     topic = match[0]
+    #     if topic not in topics:
+    #          topics[topic] = {"subscriber" : [], "publisher": []}
+    #     topics[topic]["subscriber"].append(json.loads(reply.ok.payload.to_string()))
+
+
+
 def main():
-        
-        subPattern = r".*\/subscriber\/(.*)"
-        pubPattern = r".*\/publisher\/(.*)"
-        
-        conf = zenoh.Config()
-        session = zenoh.open(conf)
+        try:
+            subPattern = r".*\/subscriber\/(.*)"
+            pubPattern = r".*\/publisher\/(.*)"
 
-        topics = dict()
+            conf = zenoh.Config()
+            session = zenoh.open(conf)
 
-        subscriberReplies = session.get(
-            "@cmpe491/subscribers",
-            target=zenoh.QueryTarget.ALL,
-            payload=None,
-            timeout=10.0
-        )
-        for reply in subscriberReplies:
-            try:
-                print(f">> Received ('{reply.ok.key_expr}': '{reply.ok.payload.to_string()}')")
-                # match = re.findall(subPattern, str(reply.ok.key_expr))
-                # if match:
-                #     topic = match[0]
-                #     if topic not in topics:
-                #          topics[topic] = {"subscriber" : [], "publisher": []}
-                #     topics[topic]["subscriber"].append(json.loads(reply.ok.payload.to_string()))
-            except:
-                print(f">> Received (ERROR: '{reply.err.payload.to_string()}')")
+            topics = dict()
 
-        publisherReplies = session.get(
-            "@cmpe491/publishers",
-            target=zenoh.QueryTarget.ALL,
-            payload=None,
-            timeout=10.0
-        )
-        for reply in publisherReplies:
-            try:
-                print(f">> Received ('{reply.ok.key_expr}': '{reply.ok.payload.to_string()}')")
-                # match = re.findall(pubPattern, str(reply.ok.key_expr))
-                # if match:
-                #     topic = match[0]
-                #     if topic not in topics:
-                #          topics[topic] = {"subscriber" : [], "publisher": []}
-                #     topics[topic]["publisher"].append(json.loads(reply.ok.payload.to_string()))
-            except:
-                print(f">> Received (ERROR: '{reply.err.payload.to_string()}')")
+            sub1 = session.declare_subscriber("@cmpe491/subscribers/reply", callback)
+            sub2 = session.declare_subscriber("@cmpe491/publishers/reply", callback)
 
-        # prettyPrint(topics)
+            subscriberReplies = session.put(
+                "@cmpe491/subscribers",
+                " "
+            )
+
+
+            publisherReplies = session.put(
+                "@cmpe491/publishers",
+                " "
+            )
+
+            time.sleep(5)
+            # prettyPrint(topics)
+        except Exception as e:
+            print(e)
 
     
 if __name__ == "__main__":
