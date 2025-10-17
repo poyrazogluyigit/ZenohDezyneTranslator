@@ -1,0 +1,3 @@
+/home/yigit/code/zenoh-dezyne-wrapper/build/CMakeFiles/ZenohDezyneWrapper.dir
+/home/yigit/code/zenoh-dezyne-wrapper/build/CMakeFiles/edit_cache.dir
+/home/yigit/code/zenoh-dezyne-wrapper/build/CMakeFiles/rebuild_cache.dir

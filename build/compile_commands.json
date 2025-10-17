@@ -1,0 +1,8 @@
+[
+{
+  "directory": "/home/yigit/code/zenoh-dezyne-wrapper/build",
+  "command": "/usr/bin/clang++-18 -DZENOHCXX_ZENOHC -g -std=gnu++17 -o CMakeFiles/ZenohDezyneWrapper.dir/src/Wrapper.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/src/Wrapper.cpp",
+  "file": "/home/yigit/code/zenoh-dezyne-wrapper/src/Wrapper.cpp",
+  "output": "CMakeFiles/ZenohDezyneWrapper.dir/src/Wrapper.cpp.o"
+}
+]
