@@ -141,10 +141,17 @@ declare_cond(condition, next_state);
 declare_event(); -> custom event tanimlamaya izin
 
 TODO:
+
+## Dezyne alakali
+
 [ ] dezyne variablelarini zenoh'a maplemenin bir yolunu arastirmak gerekiyor.
 [ ] dezyne guardlarin ne kadarina izin veriyor?
 [ ] inevitable ve optional kullanimini ekle
 [ ] guardlarda otherwise arastir
+
+## Kod alakali
+[ ] Kodu C++'a gecir
+[ ] C++'da query reply metotlarini dene
 
 # Dezyne degisken tipleri
 
