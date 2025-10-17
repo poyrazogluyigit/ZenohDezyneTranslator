@@ -1,6 +1,3 @@
-import zenoh
-
-'''
 SORU: yaptigimiz is mantikli mi?
 biz bir api olusturuyoruz ve runtime da model checking yapiyoruz.
 model sabit degil mi? compile time da belli olan bir sey degil mi? 
@@ -144,83 +141,77 @@ declare_cond(condition, next_state);
 declare_event(); -> custom event tanimlamaya izin
 
 TODO:
-dezyne variablelarini zenoh'a maplemenin bir yolunu arastirmak gerekiyor.
-2- dezyne guardlarin ne kadarina izin veriyor?
+[ ] dezyne variablelarini zenoh'a maplemenin bir yolunu arastirmak gerekiyor.
+[ ] dezyne guardlarin ne kadarina izin veriyor?
+[ ] inevitable ve optional kullanimini ekle
+[ ] guardlarda otherwise arastir
 
-'''
+# Dezyne degisken tipleri
 
-class Wrapper:
+bool, enum, subint
+bool: true, false
+!b
+b1 && b2
+b1 || b2
+b1 == b2
+b1 != b2
 
-    _subs = []
-    _pubs = []
-    _transitions = []
+enum: c misali
+e1 == e2
+e1 != e2
+v.ENUM (v = enum.ENUM)
 
-    _session = None
+subint: ranged integers
+subint int {-1..2}
+comparison, addition and subtraction are supported.
+note: integers of different subint types can be used in comparison, assignment, and function calls.
+the verifier will check that the resulting integer value is within the defined subint range.
 
-    _subQueryEngine = None
-    _pubQueryEngine = None
+extern types are not supported by any verification machinery and are only used for code generation.
 
-    @staticmethod
-    def __sendSubscribers(sample):
-        try:
-            subs = str(Wrapper._session.info.zid()) + " "
-            for sub in Wrapper._subs:
-                subs += sub
-                subs += "\n"
-            Wrapper._session.put(
-                key_expr=str(sample.key_expr) + "/reply",
-                payload=subs
-            )
-        except Exception as e:
-            print(e)
+GUARD:
+    sadece bool expression aliyor.
+    bool-expression ::= bool-literal 
+                        | bool-variable 
+                        | action 
+                        | call 
+                        | field-test 
+                        | ! bool-expression 
+                        | ( bool-expression )
+                        | bool-expression bool-operator bool-expression
+                        | int-expression comparison-operator int-expression
     
+    bool-variable ::= identifier | port . identifier
+    bool-literal ::= false | true
+    field-test ::= enum-variable . enum-field
+    enum-variable ::= bool-variable 
+    bool-operator ::= == 
+                      | !=
+                      | &&
+                      | ||
+    comparison-operator ::= ==
+                            | !=
+                            | <= 
+                            | >= 
+                            | <
+                            | >
 
-    @staticmethod
-    def __sendPublishers(sample):
-        try:
-            pubs = str(Wrapper._session.info.zid()) + " "
-            for pub in Wrapper._pubs:
-                pubs += pub
-                pubs += "\n"
-            Wrapper._session.put(
-                key_expr=str(sample.key_expr) + "/reply",
-                payload=pubs
-            )
-        except Exception as e:
-            print(e)
+    where action and call are type bool.
 
-    @classmethod
-    def open(cls, *args, **kwargs):
-        cls._session = zenoh.open(*args, **kwargs)
-        cls._subQueryEngine = cls._session.declare_subscriber("@cmpe491/subscribers", handler=cls.__sendSubscribers)
-        cls._pubQueryEngine = cls._session.declare_subscriber("@cmpe491/publishers", handler=cls.__sendPublishers)
-        print(cls._session.info.zid())
+    int-expression ::= int-literal
+                        | subint-variable
+                        | action
+                        | call
+                        | "-" int-expression
+                        | "(" int-expression ")"
+                        | int-expression int-operator int-expression
+    subint-variable ::= identifier | port "." identifier
+    int-literal ::= "-"? [0-9]+
+    int-operator ::= "+" | "-"
 
+    where action and call are of a subint type
 
-    @classmethod
-    def declare_subscriber(cls, *args, **kwargs):
-        try:
-            key_expr = ""
-            if (len(args) > 0):
-                cls._subs.append(args[0])
-            else:
-                cls._subs.append(kwargs["key_expr"])
-            currentState = kwargs.pop("currentState", None)
-            nextState = kwargs.pop("nextState", None)
-            if currentState is not None:
-                cls._transitions.append(("sub", cls._subs[-1], currentState, nextState))
-            return cls._session.declare_subscriber(*args, **{kw: kwargs[kw] for kw in kwargs if (kw != "nextState")})
-        except KeyError:
-            print("Error at declare_subscriber()")
-            exit()
-
-    @classmethod
-    def declare_publisher(cls, *args, **kwargs):
-        try:
-            if (len(args) > 0):
-                cls._pubs.append(args[0])
-            else:
-                cls._pubs.append(kwargs["key_expr"])
-            return cls._session.declare_publisher(*args, **kwargs)
-        except KeyError:
-            print("Error at declare_publisher()")
+yani ideal olarak yapilabilecek sey dil icinde enum, subint ve bool destegi saglayip bu sekilde declare
+edilmis her degiskeni donusturmek.
+cpp typed oldugu icin kendi tipimizi tanimlar ve bunu yapariz. ancak python icin bu o kadar kolay olmayabilir 
+zira python typed degil.

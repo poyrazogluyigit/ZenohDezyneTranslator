@@ -9,8 +9,8 @@ def prettyPrint(topics):
         print("\tSubscribers: ")
         for subList in topics[topic]["subscriber"]:
             for subType in subList:
-                if subType == "routers":
-                    continue
+                # if subType == "routers":
+                #     continue
                 print(f"\t\t{subType}:")
                 for sub in subList[subType]:
                     print(f"\t\t\t- {sub}")

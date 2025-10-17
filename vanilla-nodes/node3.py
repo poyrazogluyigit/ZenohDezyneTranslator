@@ -3,7 +3,7 @@ import zenoh
 
 def getPeerInfo(session):
         replies = session.get(
-            "@/*/peer/**",
+            "@/**",
             target=zenoh.QueryTarget.ALL,
             payload=None,
             timeout=10.0
@@ -22,32 +22,28 @@ def main():
     # conf.insert_json5("connect/endpoints", '["tcp/127.0.0.1:0"]')
 
     session = zenoh.open(conf)
-    session2 = zenoh.open(conf)
 
-    pub = session.declare_publisher(f"demo/vanilla/1")
-    pub2 = session.declare_publisher(f"demo/vanilla/ses2/1")
+    # pub = session.declare_publisher(f"demo/vanilla/2")
 
     sub = session.declare_subscriber(
-        "demo/vanilla/2",
+        "demo/vanilla/ses2/1",
         lambda sample: print(f"Received: {sample.payload.to_string()}"))
     
-    print(f"Node 1 running...")
+    print(f"Node 3 for 2nd session running...")
 
-    getPeerInfo(session)
-
+    # getPeerInfo(session)
 
     try: 
         while True:
-            msg = "Sent from 1"
-            pub.put(msg)
-            pub2.put(msg)
+            msg = "Sent from 2"
+            # pub.put(msg)
             time.sleep(2)
     
     except KeyboardInterrupt:
         pass
     finally:
         sub.undeclare()
-        pub.undeclare()
+        # pub.undeclare()
         session.close()
 
 if __name__ == "__main__":
