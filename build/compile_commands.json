@@ -4,5 +4,17 @@
   "command": "/usr/bin/clang++-18 -DZENOHCXX_ZENOHC -g -std=gnu++17 -o CMakeFiles/ZenohDezyneWrapper.dir/src/Wrapper.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/src/Wrapper.cpp",
   "file": "/home/yigit/code/zenoh-dezyne-wrapper/src/Wrapper.cpp",
   "output": "CMakeFiles/ZenohDezyneWrapper.dir/src/Wrapper.cpp.o"
+},
+{
+  "directory": "/home/yigit/code/zenoh-dezyne-wrapper/build",
+  "command": "/usr/bin/clang++-18 -DZENOHCXX_ZENOHC -g -std=gnu++17 -o CMakeFiles/node1.dir/src/node1.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/src/node1.cpp",
+  "file": "/home/yigit/code/zenoh-dezyne-wrapper/src/node1.cpp",
+  "output": "CMakeFiles/node1.dir/src/node1.cpp.o"
+},
+{
+  "directory": "/home/yigit/code/zenoh-dezyne-wrapper/build",
+  "command": "/usr/bin/clang++-18 -DZENOHCXX_ZENOHC -g -std=gnu++17 -o CMakeFiles/node2.dir/src/node2.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/src/node2.cpp",
+  "file": "/home/yigit/code/zenoh-dezyne-wrapper/src/node2.cpp",
+  "output": "CMakeFiles/node2.dir/src/node2.cpp.o"
 }
 ]

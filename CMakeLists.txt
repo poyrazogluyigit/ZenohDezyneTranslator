@@ -22,6 +22,8 @@ message(STATUS "Using ZenohC++ ${zenohcxx_VERSION}")
 # Target Definitions
 
 add_library(ZenohDezyneWrapper src/Wrapper.h src/Wrapper.cpp)
+add_executable(node1 src/node1.cpp)
+add_executable(node2 src/node2.cpp)
 
 # Target Configuration
 
@@ -29,6 +31,16 @@ target_link_libraries(ZenohDezyneWrapper
     PUBLIC 
         zenohcxx::zenohc
     )
+
+target_link_libraries(node1
+    PUBLIC
+        ZenohDezyneWrapper
+)
+
+target_link_libraries(node2
+    PUBLIC
+        ZenohDezyneWrapper
+)
 
 
 

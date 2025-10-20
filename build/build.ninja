@@ -72,6 +72,72 @@ build libZenohDezyneWrapper.a: CXX_STATIC_LIBRARY_LINKER__ZenohDezyneWrapper_Deb
   TARGET_FILE = libZenohDezyneWrapper.a
   TARGET_PDB = ZenohDezyneWrapper.a.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target node1
+
+
+#############################################
+# Order-only phony target for node1
+
+build cmake_object_order_depends_target_node1: phony || cmake_object_order_depends_target_ZenohDezyneWrapper
+
+build CMakeFiles/node1.dir/src/node1.cpp.o: CXX_COMPILER__node1_unscanned_Debug /home/yigit/code/zenoh-dezyne-wrapper/src/node1.cpp || cmake_object_order_depends_target_node1
+  DEFINES = -DZENOHCXX_ZENOHC
+  DEP_FILE = CMakeFiles/node1.dir/src/node1.cpp.o.d
+  FLAGS = -g -std=gnu++17
+  OBJECT_DIR = CMakeFiles/node1.dir
+  OBJECT_FILE_DIR = CMakeFiles/node1.dir/src
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target node1
+
+
+#############################################
+# Link the executable node1
+
+build node1: CXX_EXECUTABLE_LINKER__node1_Debug CMakeFiles/node1.dir/src/node1.cpp.o | libZenohDezyneWrapper.a /usr/local/lib/libzenohc.so || libZenohDezyneWrapper.a
+  FLAGS = -g
+  LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib  libZenohDezyneWrapper.a  /usr/local/lib/libzenohc.so
+  OBJECT_DIR = CMakeFiles/node1.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = node1
+  TARGET_PDB = node1.dbg
+
+# =============================================================================
+# Object build statements for EXECUTABLE target node2
+
+
+#############################################
+# Order-only phony target for node2
+
+build cmake_object_order_depends_target_node2: phony || cmake_object_order_depends_target_ZenohDezyneWrapper
+
+build CMakeFiles/node2.dir/src/node2.cpp.o: CXX_COMPILER__node2_unscanned_Debug /home/yigit/code/zenoh-dezyne-wrapper/src/node2.cpp || cmake_object_order_depends_target_node2
+  DEFINES = -DZENOHCXX_ZENOHC
+  DEP_FILE = CMakeFiles/node2.dir/src/node2.cpp.o.d
+  FLAGS = -g -std=gnu++17
+  OBJECT_DIR = CMakeFiles/node2.dir
+  OBJECT_FILE_DIR = CMakeFiles/node2.dir/src
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target node2
+
+
+#############################################
+# Link the executable node2
+
+build node2: CXX_EXECUTABLE_LINKER__node2_Debug CMakeFiles/node2.dir/src/node2.cpp.o | libZenohDezyneWrapper.a /usr/local/lib/libzenohc.so || libZenohDezyneWrapper.a
+  FLAGS = -g
+  LINK_LIBRARIES = -Wl,-rpath,/usr/local/lib  libZenohDezyneWrapper.a  /usr/local/lib/libzenohc.so
+  OBJECT_DIR = CMakeFiles/node2.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = node2
+  TARGET_PDB = node2.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -108,7 +174,7 @@ build ZenohDezyneWrapper: phony libZenohDezyneWrapper.a
 #############################################
 # Folder: /home/yigit/code/zenoh-dezyne-wrapper/build
 
-build all: phony libZenohDezyneWrapper.a
+build all: phony libZenohDezyneWrapper.a node1 node2
 
 # =============================================================================
 # Built-in targets
