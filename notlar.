@@ -145,12 +145,12 @@ TODO:
 ## Dezyne alakali
 
 [ ] dezyne variablelarini zenoh'a maplemenin bir yolunu arastirmak gerekiyor.
-[ ] dezyne guardlarin ne kadarina izin veriyor?
+[x] dezyne guardlarin ne kadarina izin veriyor?
 [ ] inevitable ve optional kullanimini ekle
 [ ] guardlarda otherwise arastir
 
 ## Kod alakali
-[ ] Kodu C++'a gecir
+[x] Kodu C++'a gecir
 [ ] C++'da query reply metotlarini dene
 
 # Dezyne degisken tipleri
@@ -222,3 +222,122 @@ yani ideal olarak yapilabilecek sey dil icinde enum, subint ve bool destegi sagl
 edilmis her degiskeni donusturmek.
 cpp typed oldugu icin kendi tipimizi tanimlar ve bunu yapariz. ancak python icin bu o kadar kolay olmayabilir 
 zira python typed degil.
+
+
+## 20 Oct
+
+gpt diyor ki bu is dataflow/symbolic analysis demektir.
+
+What are the use cases?
+
+wrapper.declare_publisher("demo/node/1")
+// this would mean that the boolean expression is added as an invariant
+// to the READY state.
+wrapper.set_invariant(isInitialized && isConnected, state.READY)
+// question: do we need to track these variables?
+// (if yes, we may require each transition to be encoded by hand)
+// bence her state'de bu degiskenlere ne oluyor bilmek gerekecek.
+// example:
+
+[state.INITIALIZING] {
+    inevitable: {
+        isInitialized = true;
+        state = state.CONNECTING;
+    }
+}
+[state.CONNECTING]{
+    inevitable: {
+        isConnected = true;
+        state = state.READY;
+    }
+}
+
+[state.READY] {
+    invariant isInitialized && isConnected;
+}
+
+// i have state variables. the invariants depend on the state variables.
+// the state variables are useless if they never change, thus they change in
+// at least one execution flow.
+
+gpt'nin onerdigi sey trace analysis oluyor, bu yoldan gidersek gitgide runtime verification'a
+converge ediyoruz.
+
+conjectures: sunlari diyebilir miyiz?
+1 - model checking runtime'dan bagimsizdir
+2 - model checking tamamen statiktir
+
+1 -> o zaman runtime'a bagimli bir veri model checking'de kullanilmaz
+-> degisken/state takip metodumuz runtime'a bagimli olamaz (*)
+
+3 - degiskenler runtime'a baglidir
+-> degiskenin runtime'dan bagimsiz bir analizini yapmak icin alabilecegi butun degerleri
+bilmek gerekir (**)
+
+(*), (**) -> model checking yapabilmek icin bir degisken alabilecegi butun degerleri bilmemiz gerekir 
+()
+
+## Plan (big picture)
+
+- Minimal programmer changes:
+    - Mark which variables and events are relevant (small macros / one-line calls).
+    - Optionally annotate event names on callbacks.
+
+- Runtime: StateTracker observes:
+    - Event occurrences (named events).
+    - Current valuations of tracked variables (finite domains).
+    - Timestamps / ordering (to separate transitions).
+
+- After collecting many runs (or exploring via test harness), build an abstract transition system:
+    -Each unique valuation of tracked variables → candidate state node.
+    -Each observed event from state A to state B → transition labeled by event.
+
+- Post-process:
+    - Collapse equivalent states (minimization / heuristics).
+    - Abstract infinite domains into finite labels (bucketing).
+    - Add non-determinism where different outcomes observed for same input.
+
+- Emit Dezyne model (interfaces, states, transitions).
+
+- Feed to Dezyne for model checking; iterate (refine instrumentation / abstraction).
+
+
+chatgpt bunu oneriyor. burada zenoh'la alakali bir sey yok ama eklenebilir mi?
+
+
+
+
+
+
+
+
+
+
+## 23 ekim 2025
+
+onden tracklenen degiskenleri ve butun transitionlari isteyecegiz.
+burada dezyne'a mantigi yazabilmek icin degiskenin nerelerde nasil degistigini 
+de istemek gerekir mi? haftaya gorecegiz.
+
+orn.
+
+subint x{0...21};
+bool y = false;
+
+add_transition([](){(x > 3) || y}, state.A, state.B)
+
+dogan hoca: proposition std::function olsun, alinca execute et.
+
+TODO: 
+[ ] genel closures fikri, cpp closures arastir
+[ ] cpp bool ve enum overload, arastir
+[ ] yukarida tarif ettigim yaklasimi implement etmeye calis
+[ ] dezyne arka plan model checking mekanizmalarini bi arastir
+
+sirketler: verum, ivex
+
+pl isi icin lean bak misal.
+sonra, ragel
+s-expression (lisp, haskell, ocaml, scheme (lol))
+programming languages theory
+
