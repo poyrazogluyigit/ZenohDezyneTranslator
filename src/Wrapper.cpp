@@ -18,6 +18,10 @@ void Wrapper::_sendPublishers(){
     this->_session->put("@cmpe491/publishers/reply", payload);
 }
 
+void Wrapper::add_transition(std::string expr, std::string_view currentState, std::string_view nextState) {
+    this->_transitions.push_back(Wrapper::Transition(expr, std::string(currentState), std::string(nextState)));
+}
+
 void Wrapper::open(zenoh::Config &config) {
     this->_session = std::make_unique<zenoh::Session>(zenoh::Session::open(std::move(config)));
     // declare publishers/subscribers for controller querying

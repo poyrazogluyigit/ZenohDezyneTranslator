@@ -19,7 +19,9 @@ int main(){
     auto sub = wrapper.declare_subscriber("demo/wrapper/2", &c_on_sample, zenoh::closures::none);
 
     while (1){
-        pub.put("Sent from 1");
+        std::string input;
+        std::cin >> input;
+        pub.put(input);
         std::this_thread::sleep_for(200ms);
     }
 
