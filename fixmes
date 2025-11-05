@@ -1,0 +1,23 @@
+FIXME
+[ ] enum takibinde custom degerlere izin verilmiyor
+[ ] veri gonderirken iyi tanimlanmis bir protokol yok (json olabilir misal)
+[ ] wrapper icerisinde cok fazla kod tekrari var (ozellikle send metotlarinda)
+[ ] send_*() fonksiyonlarini teke indir
+[ ] iki kere builtin enumla araya girdik (CUSTOM_ENUM() ve register_enum()) , bunu teke indir
+[ ] topic isimlerini direkt geciremiyorum. hashlemek gerekebilir
+[ ] su anda herkesten olsa da olmasa da sub, pub ve transition bilgisi istiyorum. herkes yolladigi icin oradan zid listesini cekebilirim. bunun yerine belki de zid cekme fonksiyonu ekleyip sub/pub/transition sahibi olmayanlardan bunlarin istegine cevap gondertmeyebilirim
+[ ] delegate all possible computations to the time of incoming request
+[ ] bruh. rn i'm adding enum name to to_string() manually. def find a better way or implementation to avoid name collisions in enums
+    - this also fucks up variable tracking i guess (State state= State.A; sonrasinda [state.B] diyemiyorum gibi)
+[ ] add_transition conditionindan direkt dezyne syntax beklesek mi yav
+
+TODO
+[ ] bütün wrapper c++'da domain specific language olarak nasıl yeniden yazılabilir
+[ ] wrapper için default constructor'ı silmeli miyim?
+[ ] inevitable ve optional kullanimini ekle
+[ ] guardlarda otherwise arastir
+[ ] pub/sub yerine query/reply bak bi
+[ ] genel closures fikri, cpp closures arastir
+[ ] cpp bool ve enum overload, arastir
+[ ] yukarida tarif ettigim yaklasimi implement etmeye calis
+[ ] dezyne arka plan model checking mekanizmalarini bi arastir

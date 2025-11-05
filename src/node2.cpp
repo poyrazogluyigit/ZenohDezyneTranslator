@@ -17,6 +17,8 @@ int main(){
     wrapper.open(conf);
 
     // bir alttaki tamamen farazi bir ornek
+    wrapper.register_subint("x", 0, 3);
+    wrapper.register_enum(EnumInfo<State>::get_enum_data(), EnumInfo<State>::get_enum_size());
     wrapper.add_transition("demo/wrapper/1: x < 3", reflect::to_string(State::A), reflect::to_string(State::B));
     wrapper.add_transition("demo/wrapper/1", reflect::to_string(State::B), reflect::to_string(State::A));
 

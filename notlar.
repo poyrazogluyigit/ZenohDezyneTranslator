@@ -140,18 +140,17 @@ declare_cond(condition, next_state);
 
 declare_event(); -> custom event tanimlamaya izin
 
-TODO:
 
 ## Dezyne alakali
 
-[ ] dezyne variablelarini zenoh'a maplemenin bir yolunu arastirmak gerekiyor.
-[x] dezyne guardlarin ne kadarina izin veriyor?
-[ ] inevitable ve optional kullanimini ekle
-[ ] guardlarda otherwise arastir
+dezyne variablelarini zenoh'a maplemenin bir yolunu arastirmak gerekiyor.
+dezyne guardlarin ne kadarina izin veriyor?
+inevitable ve optional kullanimini ekle
+guardlarda otherwise arastir
 
 ## Kod alakali
-[x] Kodu C++'a gecir
-[ ] C++'da query reply metotlarini dene
+Kodu C++'a gecir
+C++'da query reply metotlarini dene
 
 # Dezyne degisken tipleri
 
@@ -328,12 +327,6 @@ add_transition([](){(x > 3) || y}, state.A, state.B)
 
 dogan hoca: proposition std::function olsun, alinca execute et.
 
-TODO: 
-[ ] genel closures fikri, cpp closures arastir
-[ ] cpp bool ve enum overload, arastir
-[ ] yukarida tarif ettigim yaklasimi implement etmeye calis
-[ ] dezyne arka plan model checking mekanizmalarini bi arastir
-
 sirketler: verum, ivex
 
 pl isi icin lean bak misal.
@@ -348,5 +341,33 @@ programming languages theory
 c++26 reflection; also external reflection library
 expression parser library (tinyexpr)
 
+TODO:
+ [ ] sor: add_transition("demo/wrapper/1: x < 3, A, B)
+    add_transition("demo/wrapper/1, state.A && x < 3, B)
 
+hangisi mantikli?
 
+[ ] su anda herkesten olsa da olmasa da sub, pub ve transition bilgisi istiyorum. herkes yolladigi icin oradan zid listesini cekebilirim.
+    bunun yerine belki de zid cekme fonksiyonu ekleyip sub/pub/transition sahibi olmayanlardan bunlarin istegine cevap gondertmeyebilirim
+
+enum ve degiskenleri de istemek gerekebilir
+    - bunun icin enum bilgilerini de kaydetmek lazim 
+topic isimlerini direkt geciremiyorum. hashlemek gerekebilir
+
+option 1:
+wrapper.add_enum("EnumName", "val1", "val2", ...)
+...
+wrapper.add_transition(condition, "val1", "val2")
+
+CUSTOM_ENUM(EnumName, val1, val2, ...)
+    EnumName::getAllValues()...
+
+wrapper.add_enum("EnumName") -> invokes EnumName::getAllValues()
+
+wrapper.add_transition(condition, val1, val2)
+
+enum ismi de takip edilmeli.
+1 -> to_string() metoduna enumname append etmek
+2 -> builder pattern (good API integration)
+3 -> enumlarin registrationu icin de static initialization macrolari (DSL/Macro expansion)
+4 -> descriptor block for enum and transitions

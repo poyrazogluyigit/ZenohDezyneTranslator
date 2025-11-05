@@ -1,4 +1,5 @@
 #include "zenoh.hxx"
+#include <zenoh/api/subscriber.hxx>
 
 /*
     Transition format:
@@ -20,6 +21,8 @@
     reflective enums diye geciyormus
 */
 
+// FIXME this code smells bad af
+
 class Wrapper {
 
     using Transition = std::tuple<std::string, std::string, std::string>;
@@ -29,17 +32,26 @@ class Wrapper {
     // potential shallow copy issue
     std::vector<std::string> _subscribedTopics;
     std::vector<std::string> _publishedTopics;
+    std::vector<std::string> _enums;
+    std::vector<std::string> _bools;
+    std::vector<std::string> _subints;
     std::vector<Transition> _transitions;
 
     std::unique_ptr<zenoh::Subscriber<void>> _pubQuery;
     std::unique_ptr<zenoh::Subscriber<void>> _subQuery;
+    std::unique_ptr<zenoh::Subscriber<void>> _transitionQuery;
+    std::unique_ptr<zenoh::Subscriber<void>> _enumQuery;
+    std::unique_ptr<zenoh::Subscriber<void>> _boolQuery;
+    std::unique_ptr<zenoh::Subscriber<void>> _subintQuery;
 
     void _sendSubscribers();
     void _sendPublishers();
+    void _sendTransitions();
+    void _sendEnums();
+    void _sendBools();
+    void _sendSubints();
 
     public:
-        // TODO delete default constructor? idk if it
-        // makes sense
         void open(zenoh::Config &config);
 
         void add_transition(std::string expr, std::string_view currentState, std::string_view nextState);
@@ -51,6 +63,10 @@ class Wrapper {
             this->_subscribedTopics.push_back(std::string(key_expr.as_string_view()));
             return this->_session->declare_subscriber(key_expr, on_sample, on_drop, std::move(options), err);
         }
+
+        void register_enum(const std::string_view * enumData, std::size_t enumSize);
+        void register_bool(std::string_view &variable_name);
+        void register_subint(const std::string& variable_name, int lower_bound, int upper_bound);
 
         void put(const zenoh::KeyExpr &key_expr, zenoh::Bytes &&payload, 
             zenoh::Session::PutOptions &&options=zenoh::Session::PutOptions::create_default(), 

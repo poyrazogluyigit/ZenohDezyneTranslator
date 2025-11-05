@@ -1,4 +1,4 @@
-#!/home/yigit/code/zenoh-dummy-network/.venv/bin/python3
+#!/home/yigit/code/zenoh-dezyne-wrapper/.venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
