@@ -24,7 +24,7 @@ message(STATUS "Using ZenohC++ ${zenohcxx_VERSION}")
 add_library(ZenohDezyneWrapper src/Wrapper.h src/Wrapper.cpp)
 add_executable(node1 src/node1.cpp)
 add_executable(node2 src/node2.cpp)
-add_executable(main src/main.cpp src/Enum.h)
+# add_executable(main src/main.cpp src/Enum.h)
 
 # Target Configuration
 
