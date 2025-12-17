@@ -8,7 +8,7 @@ project(ZenohDezyneWrapper)
 # build flags, include paths, and preprocessor definitions.
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find required libraries
@@ -18,6 +18,10 @@ message(STATUS "Using ZenohC ${zenohc_VERSION}")
 
 find_package(zenohcxx REQUIRED)
 message(STATUS "Using ZenohC++ ${zenohcxx_VERSION}")  
+
+find_package(Catch2 3 REQUIRED)
+add_executable(TypeTests tests/TypeTests.cpp)
+target_link_libraries(TypeTests PRIVATE Catch2::Catch2WithMain)
 
 # Target Definitions
 

@@ -41,6 +41,38 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = /home/yigit/code/zenoh-dezyne-wrapper/build/
 # =============================================================================
+# Object build statements for EXECUTABLE target TypeTests
+
+
+#############################################
+# Order-only phony target for TypeTests
+
+build cmake_object_order_depends_target_TypeTests: phony || CMakeFiles/TypeTests.dir
+
+build CMakeFiles/TypeTests.dir/tests/TypeTests.cpp.o: CXX_COMPILER__TypeTests_unscanned_Debug /home/yigit/code/zenoh-dezyne-wrapper/tests/TypeTests.cpp || cmake_object_order_depends_target_TypeTests
+  DEP_FILE = CMakeFiles/TypeTests.dir/tests/TypeTests.cpp.o.d
+  FLAGS = -g -std=gnu++20
+  OBJECT_DIR = CMakeFiles/TypeTests.dir
+  OBJECT_FILE_DIR = CMakeFiles/TypeTests.dir/tests
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target TypeTests
+
+
+#############################################
+# Link the executable TypeTests
+
+build TypeTests: CXX_EXECUTABLE_LINKER__TypeTests_Debug CMakeFiles/TypeTests.dir/tests/TypeTests.cpp.o | /usr/lib/libCatch2Main.a /usr/lib/libCatch2.a
+  FLAGS = -g
+  LINK_LIBRARIES = /usr/lib/libCatch2Main.a  /usr/lib/libCatch2.a
+  OBJECT_DIR = CMakeFiles/TypeTests.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = TypeTests
+  TARGET_PDB = TypeTests.dbg
+
+# =============================================================================
 # Object build statements for STATIC_LIBRARY target ZenohDezyneWrapper
 
 
@@ -52,7 +84,7 @@ build cmake_object_order_depends_target_ZenohDezyneWrapper: phony || CMakeFiles/
 build CMakeFiles/ZenohDezyneWrapper.dir/src/Wrapper.cpp.o: CXX_COMPILER__ZenohDezyneWrapper_unscanned_Debug /home/yigit/code/zenoh-dezyne-wrapper/src/Wrapper.cpp || cmake_object_order_depends_target_ZenohDezyneWrapper
   DEFINES = -DZENOHCXX_ZENOHC
   DEP_FILE = CMakeFiles/ZenohDezyneWrapper.dir/src/Wrapper.cpp.o.d
-  FLAGS = -g -std=gnu++17
+  FLAGS = -g -std=gnu++20
   OBJECT_DIR = CMakeFiles/ZenohDezyneWrapper.dir
   OBJECT_FILE_DIR = CMakeFiles/ZenohDezyneWrapper.dir/src
 
@@ -84,7 +116,7 @@ build cmake_object_order_depends_target_node1: phony || cmake_object_order_depen
 build CMakeFiles/node1.dir/src/node1.cpp.o: CXX_COMPILER__node1_unscanned_Debug /home/yigit/code/zenoh-dezyne-wrapper/src/node1.cpp || cmake_object_order_depends_target_node1
   DEFINES = -DZENOHCXX_ZENOHC
   DEP_FILE = CMakeFiles/node1.dir/src/node1.cpp.o.d
-  FLAGS = -g -std=gnu++17
+  FLAGS = -g -std=gnu++20
   OBJECT_DIR = CMakeFiles/node1.dir
   OBJECT_FILE_DIR = CMakeFiles/node1.dir/src
 
@@ -117,7 +149,7 @@ build cmake_object_order_depends_target_node2: phony || cmake_object_order_depen
 build CMakeFiles/node2.dir/src/node2.cpp.o: CXX_COMPILER__node2_unscanned_Debug /home/yigit/code/zenoh-dezyne-wrapper/src/node2.cpp || cmake_object_order_depends_target_node2
   DEFINES = -DZENOHCXX_ZENOHC
   DEP_FILE = CMakeFiles/node2.dir/src/node2.cpp.o.d
-  FLAGS = -g -std=gnu++17
+  FLAGS = -g -std=gnu++20
   OBJECT_DIR = CMakeFiles/node2.dir
   OBJECT_FILE_DIR = CMakeFiles/node2.dir/src
 
@@ -174,7 +206,7 @@ build ZenohDezyneWrapper: phony libZenohDezyneWrapper.a
 #############################################
 # Folder: /home/yigit/code/zenoh-dezyne-wrapper/build
 
-build all: phony libZenohDezyneWrapper.a node1 node2
+build all: phony TypeTests libZenohDezyneWrapper.a node1 node2
 
 # =============================================================================
 # Built-in targets
@@ -183,14 +215,14 @@ build all: phony libZenohDezyneWrapper.a node1 node2
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/yigit/code/zenoh-dezyne-wrapper/CMakeLists.txt /usr/local/lib/cmake/zenohc/zenohcConfig.cmake /usr/local/lib/cmake/zenohc/zenohcConfigVersion.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfig.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfigVersion.cmake /usr/share/cmake-3.28/Modules/CMakeCInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-C.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.28/Modules/Platform/Linux.cmake /usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.28.3/CMakeCCompiler.cmake CMakeFiles/3.28.3/CMakeCXXCompiler.cmake CMakeFiles/3.28.3/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/yigit/code/zenoh-dezyne-wrapper/CMakeLists.txt /usr/lib/cmake/Catch2/Catch2Config.cmake /usr/lib/cmake/Catch2/Catch2ConfigVersion.cmake /usr/lib/cmake/Catch2/Catch2Targets-none.cmake /usr/lib/cmake/Catch2/Catch2Targets.cmake /usr/local/lib/cmake/zenohc/zenohcConfig.cmake /usr/local/lib/cmake/zenohc/zenohcConfigVersion.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfig.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfigVersion.cmake /usr/share/cmake-3.28/Modules/CMakeCInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-C.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.28/Modules/Platform/Linux.cmake /usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.28.3/CMakeCCompiler.cmake CMakeFiles/3.28.3/CMakeCXXCompiler.cmake CMakeFiles/3.28.3/CMakeSystem.cmake
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/yigit/code/zenoh-dezyne-wrapper/CMakeLists.txt /usr/local/lib/cmake/zenohc/zenohcConfig.cmake /usr/local/lib/cmake/zenohc/zenohcConfigVersion.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfig.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfigVersion.cmake /usr/share/cmake-3.28/Modules/CMakeCInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-C.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.28/Modules/Platform/Linux.cmake /usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.28.3/CMakeCCompiler.cmake CMakeFiles/3.28.3/CMakeCXXCompiler.cmake CMakeFiles/3.28.3/CMakeSystem.cmake: phony
+build /home/yigit/code/zenoh-dezyne-wrapper/CMakeLists.txt /usr/lib/cmake/Catch2/Catch2Config.cmake /usr/lib/cmake/Catch2/Catch2ConfigVersion.cmake /usr/lib/cmake/Catch2/Catch2Targets-none.cmake /usr/lib/cmake/Catch2/Catch2Targets.cmake /usr/local/lib/cmake/zenohc/zenohcConfig.cmake /usr/local/lib/cmake/zenohc/zenohcConfigVersion.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfig.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfigVersion.cmake /usr/share/cmake-3.28/Modules/CMakeCInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-C.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.28/Modules/Platform/Linux.cmake /usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.28.3/CMakeCCompiler.cmake CMakeFiles/3.28.3/CMakeCXXCompiler.cmake CMakeFiles/3.28.3/CMakeSystem.cmake: phony
 
 
 #############################################

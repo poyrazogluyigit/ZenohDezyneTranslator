@@ -1,50 +1,14 @@
 #pragma once
 #include <array>
 #include <iterator>
+#include <limits>
 #include <stdexcept>
 #include <string_view>
 #include <vector>
 #include <cstddef>
 #include <string>
 
-namespace reflect {
-
-    /*
-    parse_int('a10b');
-    parse_int('--10b');
-    */
-    constexpr int parse_int(std::string_view str){
-        using namespace std::literals;
-        const auto numbers = "0123456789"sv;
-        const auto start = str.find_first_of(numbers);
-
-        if (start == std::string_view::npos)
-            throw std::invalid_argument{"parse_int"};
-
-        const auto sign = start != 0U && str[start - 1U] == '-' ? -1 : 1;
-        str.remove_prefix(start);
-
-        const auto end = str.find_first_not_of(numbers);
-        if (end != std::string_view::npos)
-            str.remove_suffix(std::size(str) - end);
-
-        auto result = 0;
-        auto multiplier = 1U;
-        for (std::ptrdiff_t i = std::size(str) - 1U; i>=0; --i){
-            auto number = str[i] - '0';
-            result += number * multiplier * sign;
-            multiplier *= 10U;
-        }
-        return result;
-    }
-
-    constexpr std::size_t count_enums(const char* str){
-        std::size_t count = (*str == '\0') ? 0 : 1;
-        for (const char* p = str; *p; ++p){
-            if (*p == ',') count++;
-        }
-        return count;
-    }
+namespace proc {
 
     constexpr std::string_view trim(std::string_view sv){
         using namespace std::literals;
@@ -58,8 +22,43 @@ namespace reflect {
         return sv;
     }
 
+    // TODO should return invalid argument on 'foo 99 bar'
+    constexpr int parse_int(std::string_view str){
+        str = trim(str);
+        using namespace std::literals;
+        const auto numbers = "0123456789"sv;
+        const auto start = str.find_first_of(numbers);
+        
+        if (start > 1U)
+            throw std::invalid_argument{"parse_int"};
+
+        const auto sign = start != 0U && str[start - 1U] == '-' ? -1 : 1;
+        str.remove_prefix(start);
+
+        const auto end = str.find_first_not_of(numbers);
+        if (end != std::string_view::npos)
+            str.remove_suffix(std::size(str) - end);
+
+        long long result = 0;
+        auto multiplier = sign;
+        for (std::ptrdiff_t i = std::size(str) - 1U; i>=0; --i){
+            auto number = str[i] - '0';
+            result += number * multiplier;
+            multiplier *= 10U;
+        }
+        return result;
+    }
+
+    constexpr std::size_t count_enums(const char* str){
+        std::size_t count = (*str == '\0') ? 0 : 1;
+        for (const char* p = str; *p; ++p){
+            if (*p == ',') count++;
+        }
+        return count;
+    }
+
     template<std::size_t N>
-    constexpr std::array<std::pair<std::string_view, int>, N> parse_enum_data_new(std::string_view str){
+    constexpr std::array<std::pair<std::string_view, int>, N> parse_enum_data(std::string_view str){
         
         using namespace std::literals;
         std::array<std::pair<std::string_view, int>, N> result{};
@@ -114,12 +113,10 @@ struct BoolData {
     bool initialValue;
 };
 
-using EnumTable = std::pair<std::string_view, int> *;
-
 struct EnumData {
     const char * name;
     size_t size;
-    EnumTable data;
+    const std::pair<std::string_view, int> * data;
 };
 
 struct Entry {
@@ -146,7 +143,7 @@ public:
     void registerSubint(const char* name, int* ptr, int min, int max){
         entries.push_back(SubintData{name, ptr, min, max});
     }
-    void registerEnum(const char * name, size_t size, EnumTable table) {
+    void registerEnum(const char * name, size_t size, const std::pair<std::string_view, int> * table) {
         entries.push_back(EnumData{name, size, table});
     }
     void registerBool(const char * name, bool initialValue) {
@@ -158,7 +155,7 @@ public:
     Registry(Registry&&) = delete;
     void operator=(const Registry&) = delete;
 protected:
-    Registry();
+    Registry() = default;
 private:
     std::vector<Entry> entries;
 };
@@ -180,22 +177,20 @@ struct AutoRegister {
 
 #define DSL_ENUM(EnumName, ...)                                                                     \
     enum class EnumName {__VA_ARGS__};                                                              \
-    static constexpr size_t EnumName##_size  = reflect::count_enums(#__VA_ARGS__);                  \
-    static AutoRegister _reg_enum_#EnumName(                                                        \
+    static AutoRegister _reg_enum_##EnumName(                                                       \
         #EnumName,                                                                                  \
         [](){                                                                                       \
-            constexpr size_t N = reflect::count_enums(#__VA_ARGS__);                                \
-            static constexpr auto data = reflect::parse_enum_data_new<N>(#__VA_ARGS__);             \
+            constexpr size_t N = proc::count_enums(#__VA_ARGS__);                                   \
+            static constexpr auto data = proc::parse_enum_data<N>(#__VA_ARGS__);                    \
             return &data;                                                                           \
-        }()                                                                                         \                                                                            \
-    )                                                                                               \
+        }())                                                                                        \
 
 
-#define DSL_SUBINT(VarName, LBound, UBound)                                             \
-    int VarName = LBound;                                                               \
-    static AutoRegister _reg_subint_#VarName(#VarName, &VarName, LBound, UBound);       \
+#define DSL_SUBINT(VarName, LBound, UBound)                                                         \
+    int VarName = LBound;                                                                           \
+    static AutoRegister _reg_subint_##VarName(#VarName, &VarName, LBound, UBound);                  \
 
 
-#define DSL_BOOL(BoolName, InitialValue) \
-constexpr std::string_view var_name = #BoolName; \
-bool BoolName = InitialValue;
+#define DSL_BOOL(BoolName, InitialValue)                                                            \
+    bool BoolName = InitialValue;                                                                   \
+    static AutoRegister _reg_subint_##BoolName(#BoolName, InitialValue);                            \
