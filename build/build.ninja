@@ -193,10 +193,228 @@ build CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
 
 build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 
+
+#############################################
+# Utility command for list_install_components
+
+build list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build CMakeFiles/install.util: CUSTOM_COMMAND all
+  COMMAND = cd /home/yigit/code/zenoh-dezyne-wrapper/build && /usr/bin/cmake -P cmake_install.cmake
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build install: phony CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build CMakeFiles/install/local.util: CUSTOM_COMMAND all
+  COMMAND = cd /home/yigit/code/zenoh-dezyne-wrapper/build && /usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build install/local: phony CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build CMakeFiles/install/strip.util: CUSTOM_COMMAND all
+  COMMAND = cd /home/yigit/code/zenoh-dezyne-wrapper/build && /usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build install/strip: phony CMakeFiles/install/strip.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/yigit/code/zenoh-dezyne-wrapper/CMakeLists.txt
+# =============================================================================
+
+
+#############################################
+# Utility command for edit_cache
+
+build _deps/lexy-build/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-build && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build _deps/lexy-build/edit_cache: phony _deps/lexy-build/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build _deps/lexy-build/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-build && /usr/bin/cmake --regenerate-during-build -S/home/yigit/code/zenoh-dezyne-wrapper -B/home/yigit/code/zenoh-dezyne-wrapper/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build _deps/lexy-build/rebuild_cache: phony _deps/lexy-build/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for list_install_components
+
+build _deps/lexy-build/list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build _deps/lexy-build/CMakeFiles/install.util: CUSTOM_COMMAND _deps/lexy-build/all
+  COMMAND = cd /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-build && /usr/bin/cmake -P cmake_install.cmake
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build _deps/lexy-build/install: phony _deps/lexy-build/CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build _deps/lexy-build/CMakeFiles/install/local.util: CUSTOM_COMMAND _deps/lexy-build/all
+  COMMAND = cd /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-build && /usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build _deps/lexy-build/install/local: phony _deps/lexy-build/CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build _deps/lexy-build/CMakeFiles/install/strip.util: CUSTOM_COMMAND _deps/lexy-build/all
+  COMMAND = cd /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-build && /usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build _deps/lexy-build/install/strip: phony _deps/lexy-build/CMakeFiles/install/strip.util
+
+# =============================================================================
+# Write statements declared in CMakeLists.txt:
+# /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-src/CMakeLists.txt
+# =============================================================================
+
+# =============================================================================
+# Object build statements for STATIC_LIBRARY target lexy_file
+
+
+#############################################
+# Order-only phony target for lexy_file
+
+build cmake_object_order_depends_target_lexy_file: phony || _deps/lexy-build/src/CMakeFiles/lexy_file.dir
+
+build _deps/lexy-build/src/CMakeFiles/lexy_file.dir/input/file.cpp.o: CXX_COMPILER__lexy_file_unscanned_Debug /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-src/src/input/file.cpp || cmake_object_order_depends_target_lexy_file
+  DEP_FILE = _deps/lexy-build/src/CMakeFiles/lexy_file.dir/input/file.cpp.o.d
+  FLAGS = -g -std=gnu++20 -pedantic-errors -Werror -Wall -Wextra -Wconversion -Wsign-conversion -Wno-shift-op-parentheses -Wno-parentheses-equality
+  INCLUDES = -I/home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-src/src/../include
+  OBJECT_DIR = _deps/lexy-build/src/CMakeFiles/lexy_file.dir
+  OBJECT_FILE_DIR = _deps/lexy-build/src/CMakeFiles/lexy_file.dir/input
+
+
+# =============================================================================
+# Link build statements for STATIC_LIBRARY target lexy_file
+
+
+#############################################
+# Link the static library _deps/lexy-build/src/liblexy_file.a
+
+build _deps/lexy-build/src/liblexy_file.a: CXX_STATIC_LIBRARY_LINKER__lexy_file_Debug _deps/lexy-build/src/CMakeFiles/lexy_file.dir/input/file.cpp.o
+  LANGUAGE_COMPILE_FLAGS = -g
+  OBJECT_DIR = _deps/lexy-build/src/CMakeFiles/lexy_file.dir
+  POST_BUILD = :
+  PRE_LINK = :
+  TARGET_FILE = _deps/lexy-build/src/liblexy_file.a
+  TARGET_PDB = lexy_file.a.dbg
+
+
+#############################################
+# Utility command for edit_cache
+
+build _deps/lexy-build/src/CMakeFiles/edit_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-build/src && /usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+  DESC = No interactive CMake dialog available...
+  restat = 1
+
+build _deps/lexy-build/src/edit_cache: phony _deps/lexy-build/src/CMakeFiles/edit_cache.util
+
+
+#############################################
+# Utility command for rebuild_cache
+
+build _deps/lexy-build/src/CMakeFiles/rebuild_cache.util: CUSTOM_COMMAND
+  COMMAND = cd /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-build/src && /usr/bin/cmake --regenerate-during-build -S/home/yigit/code/zenoh-dezyne-wrapper -B/home/yigit/code/zenoh-dezyne-wrapper/build
+  DESC = Running CMake to regenerate build system...
+  pool = console
+  restat = 1
+
+build _deps/lexy-build/src/rebuild_cache: phony _deps/lexy-build/src/CMakeFiles/rebuild_cache.util
+
+
+#############################################
+# Utility command for list_install_components
+
+build _deps/lexy-build/src/list_install_components: phony
+
+
+#############################################
+# Utility command for install
+
+build _deps/lexy-build/src/CMakeFiles/install.util: CUSTOM_COMMAND _deps/lexy-build/src/all
+  COMMAND = cd /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-build/src && /usr/bin/cmake -P cmake_install.cmake
+  DESC = Install the project...
+  pool = console
+  restat = 1
+
+build _deps/lexy-build/src/install: phony _deps/lexy-build/src/CMakeFiles/install.util
+
+
+#############################################
+# Utility command for install/local
+
+build _deps/lexy-build/src/CMakeFiles/install/local.util: CUSTOM_COMMAND _deps/lexy-build/src/all
+  COMMAND = cd /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-build/src && /usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+  DESC = Installing only the local directory...
+  pool = console
+  restat = 1
+
+build _deps/lexy-build/src/install/local: phony _deps/lexy-build/src/CMakeFiles/install/local.util
+
+
+#############################################
+# Utility command for install/strip
+
+build _deps/lexy-build/src/CMakeFiles/install/strip.util: CUSTOM_COMMAND _deps/lexy-build/src/all
+  COMMAND = cd /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-build/src && /usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+  DESC = Installing the project stripped...
+  pool = console
+  restat = 1
+
+build _deps/lexy-build/src/install/strip: phony _deps/lexy-build/src/CMakeFiles/install/strip.util
+
 # =============================================================================
 # Target aliases.
 
 build ZenohDezyneWrapper: phony libZenohDezyneWrapper.a
+
+build lexy_file: phony _deps/lexy-build/src/liblexy_file.a
+
+build liblexy_file.a: phony _deps/lexy-build/src/liblexy_file.a
 
 # =============================================================================
 # Folder targets.
@@ -206,7 +424,21 @@ build ZenohDezyneWrapper: phony libZenohDezyneWrapper.a
 #############################################
 # Folder: /home/yigit/code/zenoh-dezyne-wrapper/build
 
-build all: phony TypeTests libZenohDezyneWrapper.a node1 node2
+build all: phony TypeTests libZenohDezyneWrapper.a node1 node2 _deps/lexy-build/all
+
+# =============================================================================
+
+#############################################
+# Folder: /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-build
+
+build _deps/lexy-build/all: phony _deps/lexy-build/src/all
+
+# =============================================================================
+
+#############################################
+# Folder: /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-build/src
+
+build _deps/lexy-build/src/all: phony _deps/lexy-build/src/liblexy_file.a
 
 # =============================================================================
 # Built-in targets
@@ -215,14 +447,14 @@ build all: phony TypeTests libZenohDezyneWrapper.a node1 node2
 #############################################
 # Re-run CMake if any of its inputs changed.
 
-build build.ninja: RERUN_CMAKE | /home/yigit/code/zenoh-dezyne-wrapper/CMakeLists.txt /usr/lib/cmake/Catch2/Catch2Config.cmake /usr/lib/cmake/Catch2/Catch2ConfigVersion.cmake /usr/lib/cmake/Catch2/Catch2Targets-none.cmake /usr/lib/cmake/Catch2/Catch2Targets.cmake /usr/local/lib/cmake/zenohc/zenohcConfig.cmake /usr/local/lib/cmake/zenohc/zenohcConfigVersion.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfig.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfigVersion.cmake /usr/share/cmake-3.28/Modules/CMakeCInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-C.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.28/Modules/Platform/Linux.cmake /usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.28.3/CMakeCCompiler.cmake CMakeFiles/3.28.3/CMakeCXXCompiler.cmake CMakeFiles/3.28.3/CMakeSystem.cmake
+build build.ninja: RERUN_CMAKE | /home/yigit/code/zenoh-dezyne-wrapper/CMakeLists.txt /usr/lib/cmake/Catch2/Catch2Config.cmake /usr/lib/cmake/Catch2/Catch2ConfigVersion.cmake /usr/lib/cmake/Catch2/Catch2Targets-none.cmake /usr/lib/cmake/Catch2/Catch2Targets.cmake /usr/local/lib/cmake/zenohc/zenohcConfig.cmake /usr/local/lib/cmake/zenohc/zenohcConfigVersion.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfig.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfigVersion.cmake /usr/share/cmake-3.28/Modules/BasicConfigVersion-SameMinorVersion.cmake.in /usr/share/cmake-3.28/Modules/CMakeCInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.28/Modules/CMakePackageConfigHelpers.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-C.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake /usr/share/cmake-3.28/Modules/ExternalProject/shared_internal_commands.cmake /usr/share/cmake-3.28/Modules/FetchContent.cmake /usr/share/cmake-3.28/Modules/FetchContent/CMakeLists.cmake.in /usr/share/cmake-3.28/Modules/GNUInstallDirs.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.28/Modules/Platform/Linux.cmake /usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake /usr/share/cmake-3.28/Modules/WriteBasicConfigVersionFile.cmake CMakeCache.txt CMakeFiles/3.28.3/CMakeCCompiler.cmake CMakeFiles/3.28.3/CMakeCXXCompiler.cmake CMakeFiles/3.28.3/CMakeSystem.cmake _deps/lexy-src/CMakeLists.txt _deps/lexy-src/cmake/lexyConfig.cmake.in _deps/lexy-src/src/CMakeLists.txt
   pool = console
 
 
 #############################################
 # A missing CMake input file is not an error.
 
-build /home/yigit/code/zenoh-dezyne-wrapper/CMakeLists.txt /usr/lib/cmake/Catch2/Catch2Config.cmake /usr/lib/cmake/Catch2/Catch2ConfigVersion.cmake /usr/lib/cmake/Catch2/Catch2Targets-none.cmake /usr/lib/cmake/Catch2/Catch2Targets.cmake /usr/local/lib/cmake/zenohc/zenohcConfig.cmake /usr/local/lib/cmake/zenohc/zenohcConfigVersion.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfig.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfigVersion.cmake /usr/share/cmake-3.28/Modules/CMakeCInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-C.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.28/Modules/Platform/Linux.cmake /usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake CMakeCache.txt CMakeFiles/3.28.3/CMakeCCompiler.cmake CMakeFiles/3.28.3/CMakeCXXCompiler.cmake CMakeFiles/3.28.3/CMakeSystem.cmake: phony
+build /home/yigit/code/zenoh-dezyne-wrapper/CMakeLists.txt /usr/lib/cmake/Catch2/Catch2Config.cmake /usr/lib/cmake/Catch2/Catch2ConfigVersion.cmake /usr/lib/cmake/Catch2/Catch2Targets-none.cmake /usr/lib/cmake/Catch2/Catch2Targets.cmake /usr/local/lib/cmake/zenohc/zenohcConfig.cmake /usr/local/lib/cmake/zenohc/zenohcConfigVersion.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfig.cmake /usr/local/lib/cmake/zenohcxx/zenohcxxConfigVersion.cmake /usr/share/cmake-3.28/Modules/BasicConfigVersion-SameMinorVersion.cmake.in /usr/share/cmake-3.28/Modules/CMakeCInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCXXInformation.cmake /usr/share/cmake-3.28/Modules/CMakeCommonLanguageInclude.cmake /usr/share/cmake-3.28/Modules/CMakeGenericSystem.cmake /usr/share/cmake-3.28/Modules/CMakeInitializeConfigs.cmake /usr/share/cmake-3.28/Modules/CMakeLanguageInformation.cmake /usr/share/cmake-3.28/Modules/CMakePackageConfigHelpers.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInformation.cmake /usr/share/cmake-3.28/Modules/CMakeSystemSpecificInitialize.cmake /usr/share/cmake-3.28/Modules/Compiler/CMakeCommonCompilerMacros.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-C.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Compiler/Clang.cmake /usr/share/cmake-3.28/Modules/Compiler/GNU.cmake /usr/share/cmake-3.28/Modules/ExternalProject/shared_internal_commands.cmake /usr/share/cmake-3.28/Modules/FetchContent.cmake /usr/share/cmake-3.28/Modules/FetchContent/CMakeLists.cmake.in /usr/share/cmake-3.28/Modules/GNUInstallDirs.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Clang-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-C.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU-CXX.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-GNU.cmake /usr/share/cmake-3.28/Modules/Platform/Linux-Initialize.cmake /usr/share/cmake-3.28/Modules/Platform/Linux.cmake /usr/share/cmake-3.28/Modules/Platform/UnixPaths.cmake /usr/share/cmake-3.28/Modules/WriteBasicConfigVersionFile.cmake CMakeCache.txt CMakeFiles/3.28.3/CMakeCCompiler.cmake CMakeFiles/3.28.3/CMakeCXXCompiler.cmake CMakeFiles/3.28.3/CMakeSystem.cmake _deps/lexy-src/CMakeLists.txt _deps/lexy-src/cmake/lexyConfig.cmake.in _deps/lexy-src/src/CMakeLists.txt: phony
 
 
 #############################################

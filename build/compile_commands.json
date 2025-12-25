@@ -22,5 +22,11 @@
   "command": "/usr/bin/clang++-18 -DZENOHCXX_ZENOHC -g -std=gnu++20 -o CMakeFiles/node2.dir/src/node2.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/src/node2.cpp",
   "file": "/home/yigit/code/zenoh-dezyne-wrapper/src/node2.cpp",
   "output": "CMakeFiles/node2.dir/src/node2.cpp.o"
+},
+{
+  "directory": "/home/yigit/code/zenoh-dezyne-wrapper/build",
+  "command": "/usr/bin/clang++-18 -I/home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-src/src/../include -g -std=gnu++20 -pedantic-errors -Werror -Wall -Wextra -Wconversion -Wsign-conversion -Wno-shift-op-parentheses -Wno-parentheses-equality -o _deps/lexy-build/src/CMakeFiles/lexy_file.dir/input/file.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-src/src/input/file.cpp",
+  "file": "/home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-src/src/input/file.cpp",
+  "output": "_deps/lexy-build/src/CMakeFiles/lexy_file.dir/input/file.cpp.o"
 }
 ]

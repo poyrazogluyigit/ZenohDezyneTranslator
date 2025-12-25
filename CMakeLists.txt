@@ -13,11 +13,16 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Find required libraries
 
+include(FetchContent)
+
 find_package(zenohc REQUIRED)
 message(STATUS "Using ZenohC ${zenohc_VERSION}")    
 
 find_package(zenohcxx REQUIRED)
 message(STATUS "Using ZenohC++ ${zenohcxx_VERSION}")  
+
+FetchContent_Declare(lexy URL https://lexy.foonathan.net/download/lexy-src.zip)
+FetchContent_MakeAvailable(lexy)
 
 find_package(Catch2 3 REQUIRED)
 add_executable(TypeTests tests/TypeTests.cpp)
