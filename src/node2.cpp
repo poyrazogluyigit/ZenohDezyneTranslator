@@ -1,11 +1,11 @@
 #include "Wrapper.h"
-#include "Enum.h"
+#include "Types.h"
 #include <iostream>
 #include <thread>
 
 using namespace std::literals::chrono_literals;
 
-CUSTOM_ENUM(State, A, B);
+DSL_ENUM(State, A, B);
 
 State state = State::A;
 

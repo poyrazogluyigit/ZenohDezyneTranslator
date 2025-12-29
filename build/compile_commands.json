@@ -1,31 +1,19 @@
 [
 {
   "directory": "/home/yigit/code/zenoh-dezyne-wrapper/build",
-  "command": "/usr/bin/clang++-18 -g -std=gnu++20 -o CMakeFiles/TypeTests.dir/tests/TypeTests.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/tests/TypeTests.cpp",
-  "file": "/home/yigit/code/zenoh-dezyne-wrapper/tests/TypeTests.cpp",
-  "output": "CMakeFiles/TypeTests.dir/tests/TypeTests.cpp.o"
+  "command": "/usr/bin/g++ -DLEXY_HAS_UNICODE_DATABASE=1 -I/home/yigit/code/zenoh-dezyne-wrapper/src/include -isystem /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-src/src/../include -g -std=gnu++20 -o CMakeFiles/PreprocessingTests.dir/tests/PreprocessingTests.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/tests/PreprocessingTests.cpp",
+  "file": "/home/yigit/code/zenoh-dezyne-wrapper/tests/PreprocessingTests.cpp",
+  "output": "CMakeFiles/PreprocessingTests.dir/tests/PreprocessingTests.cpp.o"
 },
 {
   "directory": "/home/yigit/code/zenoh-dezyne-wrapper/build",
-  "command": "/usr/bin/clang++-18 -DZENOHCXX_ZENOHC -g -std=gnu++20 -o CMakeFiles/ZenohDezyneWrapper.dir/src/Wrapper.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/src/Wrapper.cpp",
-  "file": "/home/yigit/code/zenoh-dezyne-wrapper/src/Wrapper.cpp",
-  "output": "CMakeFiles/ZenohDezyneWrapper.dir/src/Wrapper.cpp.o"
+  "command": "/usr/bin/g++ -I/home/yigit/code/zenoh-dezyne-wrapper/src/include -g -std=gnu++20 -o CMakeFiles/RegistryTests.dir/tests/RegistryTests.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/tests/RegistryTests.cpp",
+  "file": "/home/yigit/code/zenoh-dezyne-wrapper/tests/RegistryTests.cpp",
+  "output": "CMakeFiles/RegistryTests.dir/tests/RegistryTests.cpp.o"
 },
 {
   "directory": "/home/yigit/code/zenoh-dezyne-wrapper/build",
-  "command": "/usr/bin/clang++-18 -DZENOHCXX_ZENOHC -g -std=gnu++20 -o CMakeFiles/node1.dir/src/node1.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/src/node1.cpp",
-  "file": "/home/yigit/code/zenoh-dezyne-wrapper/src/node1.cpp",
-  "output": "CMakeFiles/node1.dir/src/node1.cpp.o"
-},
-{
-  "directory": "/home/yigit/code/zenoh-dezyne-wrapper/build",
-  "command": "/usr/bin/clang++-18 -DZENOHCXX_ZENOHC -g -std=gnu++20 -o CMakeFiles/node2.dir/src/node2.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/src/node2.cpp",
-  "file": "/home/yigit/code/zenoh-dezyne-wrapper/src/node2.cpp",
-  "output": "CMakeFiles/node2.dir/src/node2.cpp.o"
-},
-{
-  "directory": "/home/yigit/code/zenoh-dezyne-wrapper/build",
-  "command": "/usr/bin/clang++-18 -I/home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-src/src/../include -g -std=gnu++20 -pedantic-errors -Werror -Wall -Wextra -Wconversion -Wsign-conversion -Wno-shift-op-parentheses -Wno-parentheses-equality -o _deps/lexy-build/src/CMakeFiles/lexy_file.dir/input/file.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-src/src/input/file.cpp",
+  "command": "/usr/bin/g++ -I/home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-src/src/../include -g -std=gnu++20 -pedantic-errors -Werror -Wall -Wextra -Wconversion -Wsign-conversion -Wno-parentheses -Wno-unused-local-typedefs -Wno-array-bounds -Wno-maybe-uninitialized -Wno-restrict -Wno-dangling-pointer -Wno-subobject-linkage -o _deps/lexy-build/src/CMakeFiles/lexy_file.dir/input/file.cpp.o -c /home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-src/src/input/file.cpp",
   "file": "/home/yigit/code/zenoh-dezyne-wrapper/build/_deps/lexy-src/src/input/file.cpp",
   "output": "_deps/lexy-build/src/CMakeFiles/lexy_file.dir/input/file.cpp.o"
 }

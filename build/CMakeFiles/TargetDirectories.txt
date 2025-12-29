@@ -1,7 +1,5 @@
-/home/yigit/code/zenoh-dezyne-wrapper/build/CMakeFiles/TypeTests.dir
-/home/yigit/code/zenoh-dezyne-wrapper/build/CMakeFiles/ZenohDezyneWrapper.dir
-/home/yigit/code/zenoh-dezyne-wrapper/build/CMakeFiles/node1.dir
-/home/yigit/code/zenoh-dezyne-wrapper/build/CMakeFiles/node2.dir
+/home/yigit/code/zenoh-dezyne-wrapper/build/CMakeFiles/PreprocessingTests.dir
+/home/yigit/code/zenoh-dezyne-wrapper/build/CMakeFiles/RegistryTests.dir
 /home/yigit/code/zenoh-dezyne-wrapper/build/CMakeFiles/edit_cache.dir
 /home/yigit/code/zenoh-dezyne-wrapper/build/CMakeFiles/rebuild_cache.dir
 /home/yigit/code/zenoh-dezyne-wrapper/build/CMakeFiles/list_install_components.dir
