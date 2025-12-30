@@ -27,26 +27,25 @@ void log_match(const std::string& type) {
 /* Keywords */
 %token KW_TRUE KW_FALSE
 
-/* Arithmetic Operators */
+/* Operators */
 %token PLUS MINUS
-
-/* Boolean Operators */
-%token EQ NEQ GT LT LEQ GEQ OR AND
-%token NOT
-
-%left OR
-%left AND
-%left EQ NEQ
-%left LT GT LEQ GEQ
+%token EQ NEQ GT LT LEQ GEQ OR AND NOT
+%token ASGN DCOL
 
 /* Structure */
 %token LPAREN RPAREN LBRACE RBRACE SEMICOLON COMMA
 
-/* Text related tokens */
-%token <sval> IDENT
-%token <sval> TOK_TEXT
+/* Values */
+%token <sval> IDENT TOK_TEXT
 %token NUMBER
-%token DCOL
+
+/* Precedence (Resolves Operator Shift/Reduce) */
+%left OR
+%left AND
+%left EQ NEQ
+%left LT GT LEQ GEQ
+%left PLUS MINUS
+%right NOT
 
 %%
 
@@ -60,102 +59,97 @@ statements:
     ;
 
 statement:
-    /* The specific Macros we care about */
+    /* 1. Macros */
     dsl_macro
-    /* Structural blocks (to handle recursion) */
+    /* 2. Blocks */
     | block
-    /* Standard C++ code we want to skip */
-    | TOK_TEXT       { /* Ignore */ }
-    | SEMICOLON      { /* Ignore */ }
-    | COMMA          { /* Ignore */ }
-    | LPAREN         { /* Ignore loose parens in C++ code */ }
-    | RPAREN         { /* Ignore */ }
+    /* 3. Ignored C++ "Water" - Explicitly listing tokens to skip */
+    | TOK_TEXT | IDENT | NUMBER | KW_TRUE | KW_FALSE
+    | SEMICOLON | COMMA | LPAREN | RPAREN 
+    | PLUS | MINUS | EQ | NEQ | GT | LT | LEQ | GEQ | OR | AND | NOT | DCOL | ASGN
     ;
-
 
 block:
     LBRACE statements RBRACE
     ;
 
-/* --- MACRO DEFINITIONS --- */
-
 dsl_macro:
-    TOK_DECLARE_ENUM LPAREN args RPAREN opt_semicolon
+    /* SEMICOLON CONFLICT FIX: 
+       We removed 'opt_semicolon' from all these rules. 
+       The parser finishes the macro at ')'. 
+       The semicolon that follows is caught by the 'statement: SEMICOLON' rule above. */
+
+    TOK_DECLARE_ENUM LPAREN args RPAREN
     { log_match("Enum Declaration"); }
 
-    | TOK_ENUM_VAR LPAREN args RPAREN opt_semicolon
+    | TOK_ENUM_VAR LPAREN args RPAREN
     { log_match("Enum Variable"); }
 
-    | TOK_SUBINT LPAREN args RPAREN opt_semicolon
+    | TOK_SUBINT LPAREN args RPAREN
     { log_match("SubInt"); }
 
-    | TOK_SET LPAREN args RPAREN opt_semicolon
+    | TOK_SET LPAREN args RPAREN
     { log_match("Set Operation"); }
 
-    | TOK_DECLARE_PUB LPAREN args RPAREN opt_semicolon
+    | TOK_DECLARE_PUB LPAREN args RPAREN
     { log_match("Publisher Declaration"); }
     
-    | TOK_PUT LPAREN args RPAREN opt_semicolon
+    | TOK_PUT LPAREN args RPAREN
     { log_match("Zenoh Put"); }
 
-    /* Guard: followed by a statement (which could be a block or single line) */
-    | TOK_GUARD LPAREN bool_expression RPAREN statement
+    /* Guard: Uses unified expression */
+    | TOK_GUARD LPAREN expression RPAREN statement
     { log_match("Guard"); }
 
-    /* Subscriber: Macro -> (Ignored Lambda Capture/Args) -> Body Block */
-    | TOK_DECLARE_SUB LPAREN args RPAREN ignored_cpp block opt_semicolon
+    /* Subscriber: Uses skip_lambda */
+    | TOK_DECLARE_SUB LPAREN args RPAREN skip_lambda block
     { log_match("Subscriber with Body"); }
     ;
 
-/* GUARD PARSING */
-bool_expression: 
-    bool_literal
-    | variable
-    | enum_comparison
-    | NOT bool_expression
-    | LPAREN bool_expression RPAREN
-    | bool_expression bool_operator bool_expression
-    | int_expression comparison_operator int_expression
+/* --- UNIFIED EXPRESSION PARSING (Fixes Reduce/Reduce & Operator Conflicts) --- */
+expression:
+    /* Binary Operations */
+      expression OR expression
+    | expression AND expression
+    | expression EQ expression
+    | expression NEQ expression
+    | expression LT expression
+    | expression GT expression
+    | expression LEQ expression
+    | expression GEQ expression
+    | expression PLUS expression
+    | expression MINUS expression
+    /* Unary */
+    | NOT expression
+    /* Grouping */
+    | LPAREN expression RPAREN
+    /* Terminals */
+    | IDENT
+    | NUMBER
+    | KW_TRUE | KW_FALSE
+    /* Complex IDs (State::A) */
+    | IDENT DCOL IDENT
+    /* Assignment (x = 5) */
+    | IDENT ASGN expression
+    /* Increment (x++) handled as generic text or specialized rule */
+    | IDENT PLUS PLUS 
     ;
 
-int_expression:
-    NUMBER
-    | variable
-    | MINUS int_expression
-    | PLUS int_expression
-    | int_expression int_operator int_expression
-
-int_operator:
-    PLUS | MINUS
+/* --- SKIP LAMBDA LOGIC --- */
+skip_lambda:
+    /* empty */
+    | skip_lambda junk_token
     ;
 
-enum_comparison:
-    variable EQ IDENT DCOL IDENT
-    | variable NEQ IDENT DCOL IDENT
+junk_token:
+    TOK_TEXT | IDENT | NUMBER | KW_TRUE | KW_FALSE
+    | LPAREN | RPAREN | SEMICOLON | COMMA
+    | PLUS | MINUS | EQ | NEQ | GT | LT | LEQ | GEQ | OR | AND | NOT | DCOL | ASGN
     ;
-
-variable:
-    IDENT
-    ;
-
-bool_literal:
-    KW_FALSE | KW_TRUE
-    ;
-
-bool_operator:
-    EQ | NEQ | OR | AND
-    ;
-
-comparison_operator:
-    EQ | NEQ | GT | LT | GEQ | LEQ
-    ;
-
-
 
 /* --- ARGUMENTS --- */
-/* We just gobble up anything balanced inside parens */
 args:
-    /* Empty args allowed */
+    /* empty */
     | args_list
     ;
 
@@ -165,33 +159,16 @@ args_list:
     ;
 
 arg_item:
-    /* An argument is any sequence of Text or Nested Parentheses */
-    complex_text
+    arg_token 
+    | arg_item arg_token
     ;
 
-complex_text:
-    TOK_TEXT
-    | complex_text TOK_TEXT
-    | LPAREN args RPAREN  /* Handle nested parens (x + (y*z)) */
-    | complex_text LPAREN args RPAREN
-    ;
-
-/* --- IGNORING C++ --- */
-/* This rule consumes everything that isn't a DSL macro or a block delimiter */
-ignored_cpp:
-    TOK_TEXT
-    | SEMICOLON
-    | COMMA
-    | LPAREN args RPAREN /* Skip function calls/definitions in C++ */
-    | ignored_cpp TOK_TEXT
-    | ignored_cpp SEMICOLON
-    | ignored_cpp COMMA
-    | ignored_cpp LPAREN args RPAREN
-    ;
-
-opt_semicolon:
-    /* empty */
-    | SEMICOLON
+arg_token:
+    TOK_TEXT | IDENT | NUMBER | KW_TRUE | KW_FALSE
+    | PLUS | MINUS | EQ | NEQ | GT | LT | LEQ | GEQ | OR | AND | NOT 
+    | ASGN 
+    | DCOL                 /* <--- ALLOW :: FREELY HERE */
+    | LPAREN args RPAREN   /* Handle nested parens */
     ;
 
 %%

@@ -20,7 +20,6 @@
 "ZENOH_DECLARE_PUBLISHER"   { return TOK_DECLARE_PUB; }
 "ZENOH_PUT"                 { return TOK_PUT; }
 
-/* Keywords */
 "true"                      { return KW_TRUE; }
 "false"                     { return KW_FALSE; }
 
@@ -49,7 +48,7 @@
     /* Matches string literals */
 \"[^"]*\"   { yylval.sval = strdup(yytext); return TOK_TEXT; }
 
-[a-zA-Z_][a-zA-Z0-9_]+          { yylval.sval = strdup(yytext); return IDENT; }
+[a-zA-Z_][a-zA-Z0-9_]*          { yylval.sval = strdup(yytext); return IDENT; }
 [0-9]+                          { return NUMBER; }
 
     /* Matches any single character that isn't one of the above.

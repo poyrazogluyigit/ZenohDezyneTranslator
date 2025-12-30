@@ -75,16 +75,17 @@ extern int yydebug;
     OR = 276,                      /* OR  */
     AND = 277,                     /* AND  */
     NOT = 278,                     /* NOT  */
-    LPAREN = 279,                  /* LPAREN  */
-    RPAREN = 280,                  /* RPAREN  */
-    LBRACE = 281,                  /* LBRACE  */
-    RBRACE = 282,                  /* RBRACE  */
-    SEMICOLON = 283,               /* SEMICOLON  */
-    COMMA = 284,                   /* COMMA  */
-    IDENT = 285,                   /* IDENT  */
-    TOK_TEXT = 286,                /* TOK_TEXT  */
-    NUMBER = 287,                  /* NUMBER  */
-    DCOL = 288                     /* DCOL  */
+    ASGN = 279,                    /* ASGN  */
+    DCOL = 280,                    /* DCOL  */
+    LPAREN = 281,                  /* LPAREN  */
+    RPAREN = 282,                  /* RPAREN  */
+    LBRACE = 283,                  /* LBRACE  */
+    RBRACE = 284,                  /* RBRACE  */
+    SEMICOLON = 285,               /* SEMICOLON  */
+    COMMA = 286,                   /* COMMA  */
+    IDENT = 287,                   /* IDENT  */
+    TOK_TEXT = 288,                /* TOK_TEXT  */
+    NUMBER = 289                   /* NUMBER  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -97,7 +98,7 @@ union YYSTYPE
 
     char *sval;
 
-#line 101 "parser.hpp"
+#line 102 "parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
