@@ -44,6 +44,12 @@
 #if YYDEBUG
 extern int yydebug;
 #endif
+/* "%code requires" blocks.  */
+#line 46 "parser.y"
+
+    #include "Statement.h"
+
+#line 53 "parser.hpp"
 
 /* Token kinds.  */
 #ifndef YYTOKENTYPE
@@ -59,33 +65,39 @@ extern int yydebug;
     TOK_DECLARE_PUB = 260,         /* TOK_DECLARE_PUB  */
     TOK_ENUM_VAR = 261,            /* TOK_ENUM_VAR  */
     TOK_SUBINT = 262,              /* TOK_SUBINT  */
-    TOK_GUARD = 263,               /* TOK_GUARD  */
-    TOK_SET = 264,                 /* TOK_SET  */
-    TOK_PUT = 265,                 /* TOK_PUT  */
-    KW_TRUE = 266,                 /* KW_TRUE  */
-    KW_FALSE = 267,                /* KW_FALSE  */
-    PLUS = 268,                    /* PLUS  */
-    MINUS = 269,                   /* MINUS  */
-    EQ = 270,                      /* EQ  */
-    NEQ = 271,                     /* NEQ  */
-    GT = 272,                      /* GT  */
-    LT = 273,                      /* LT  */
-    LEQ = 274,                     /* LEQ  */
-    GEQ = 275,                     /* GEQ  */
-    OR = 276,                      /* OR  */
-    AND = 277,                     /* AND  */
-    NOT = 278,                     /* NOT  */
-    ASGN = 279,                    /* ASGN  */
-    DCOL = 280,                    /* DCOL  */
-    LPAREN = 281,                  /* LPAREN  */
-    RPAREN = 282,                  /* RPAREN  */
-    LBRACE = 283,                  /* LBRACE  */
-    RBRACE = 284,                  /* RBRACE  */
-    SEMICOLON = 285,               /* SEMICOLON  */
-    COMMA = 286,                   /* COMMA  */
-    IDENT = 287,                   /* IDENT  */
-    TOK_TEXT = 288,                /* TOK_TEXT  */
-    NUMBER = 289                   /* NUMBER  */
+    TOK_BOOL = 263,                /* TOK_BOOL  */
+    TOK_GUARD = 264,               /* TOK_GUARD  */
+    TOK_SET = 265,                 /* TOK_SET  */
+    TOK_PUT = 266,                 /* TOK_PUT  */
+    KW_TRUE = 267,                 /* KW_TRUE  */
+    KW_FALSE = 268,                /* KW_FALSE  */
+    PLUS = 269,                    /* PLUS  */
+    MINUS = 270,                   /* MINUS  */
+    EQ = 271,                      /* EQ  */
+    NEQ = 272,                     /* NEQ  */
+    GT = 273,                      /* GT  */
+    LT = 274,                      /* LT  */
+    LEQ = 275,                     /* LEQ  */
+    GEQ = 276,                     /* GEQ  */
+    OR = 277,                      /* OR  */
+    AND = 278,                     /* AND  */
+    NOT = 279,                     /* NOT  */
+    ASGN = 280,                    /* ASGN  */
+    DCOL = 281,                    /* DCOL  */
+    LPAREN = 282,                  /* LPAREN  */
+    RPAREN = 283,                  /* RPAREN  */
+    LBRACE = 284,                  /* LBRACE  */
+    RBRACE = 285,                  /* RBRACE  */
+    LBRACKET = 286,                /* LBRACKET  */
+    RBRACKET = 287,                /* RBRACKET  */
+    SEMICOLON = 288,               /* SEMICOLON  */
+    COMMA = 289,                   /* COMMA  */
+    TOK_BEGIN = 290,               /* TOK_BEGIN  */
+    TOK_END = 291,                 /* TOK_END  */
+    IDENT = 292,                   /* IDENT  */
+    TOK_TEXT = 293,                /* TOK_TEXT  */
+    STR_LIT = 294,                 /* STR_LIT  */
+    NUMBER = 295                   /* NUMBER  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -94,11 +106,14 @@ extern int yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 19 "parser.y"
+#line 50 "parser.y"
 
-    char *sval;
+    std::string* sval;
+    SingleStmt* sstmt;
+    CompoundStmt* cstmt;
+    GuardStmt* gstmt;
 
-#line 102 "parser.hpp"
+#line 117 "parser.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

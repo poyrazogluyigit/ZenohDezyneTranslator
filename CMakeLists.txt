@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.8)
+cmake_minimum_required(VERSION 3.14)
 
 project(ZenohDezyneWrapper)
 
@@ -28,6 +28,14 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(lexy)
 
+FetchContent_Declare(
+    cli11_proj
+    QUIET
+    GIT_REPOSITORY https://github.com/CLIUtils/CLI11.git
+    GIT_TAG v2.6.1
+)
+FetchContent_MakeAvailable(cli11_proj)
+
 find_package(Catch2 3 REQUIRED)
 
 add_executable(PreprocessingTests tests/PreprocessingTests.cpp)
@@ -38,6 +46,14 @@ target_link_libraries(PreprocessingTests PRIVATE Catch2::Catch2WithMain)
 add_executable(RegistryTests tests/RegistryTests.cpp)
 target_include_directories(RegistryTests PRIVATE src/include)
 target_link_libraries(RegistryTests PRIVATE Catch2::Catch2WithMain)
+
+add_executable(node1 examples/node1.cpp)
+target_include_directories(node1 PRIVATE src/include)
+target_link_libraries(node1 PUBLIC zenohcxx::zenohc)
+
+add_executable(node2 examples/node2.cpp)
+target_include_directories(node2 PRIVATE src/include)
+target_link_libraries(node2 PUBLIC zenohcxx::zenohc)
 
 # Target Definitions
 

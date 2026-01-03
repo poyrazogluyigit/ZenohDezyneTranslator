@@ -1,28 +1,27 @@
 #include <iostream>
 #include <thread>
+#include <zenoh/api/closures.hxx>
 
+#include "zenoh.hxx"    // IWYU pragma: keep
 #include "Language.h"
 
 using namespace std::literals::chrono_literals;
 
-void c_on_sample(const zenoh::Sample &sample){
-    std::cout << "Received " << sample.get_payload().as_string() << std::endl;
-}
-
 int main(){
 
-    Wrapper wrapper;
-
     zenoh::Config conf = zenoh::Config::create_default();
-    wrapper.open(conf);
+    auto session = zenoh::Session::open(std::move(conf));
 
-    auto pub = wrapper.declare_publisher("demo/wrapper/1");
-    auto sub = wrapper.declare_subscriber("demo/wrapper/2", &c_on_sample, zenoh::closures::none);
+    ZENOH_DECLARE_PUBLISHER(session, pub,"demo/wrapper/1");
+    ZENOH_DECLARE_SUBSCRIBER(session, sub, "demo/wrapper/2", zenoh::closures::none)
+    [](const zenoh::Sample &sample){
+        std::cout << "Received " << sample.get_payload().as_string() << std::endl;
+    };
 
     while (1){
         std::string input;
         std::cin >> input;
-        pub.put(input);
+        ZENOH_PUT(pub, input);
         std::this_thread::sleep_for(200ms);
     }
 

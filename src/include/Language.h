@@ -1,52 +1,69 @@
 #pragma once
-#include "Registries.h"
-#include "Preprocessing.h"
 
 
-#define DSL_ENUM(EnumName, ...)                                                                     \
-    enum class EnumName {__VA_ARGS__};                                                              \
-    static AutoRegister _reg_enum_##EnumName(                                                       \
-        #EnumName,                                                                                  \
-        [](){                                                                                       \
-            constexpr size_t N = proc::count_enums(#__VA_ARGS__);                                   \
-            static constexpr auto data = proc::parse_enum_data<N>(#__VA_ARGS__);                    \
-            return &data;                                                                           \
-        }())                                                                                        \
-    static ScopeAutoReg _reg_subint_stmt_##VarName(ScopeTokenType::VAR_DECL, #EnumName);                
+#include <tuple>
+#include <utility>
+#include <string>
+
+// Namespace to keep the global scope clean
+namespace sub_macro {
+
+    template <typename Session, typename... Args>
+    struct SubscriberBuilder {
+        Session& session;
+        std::string topic;
+        std::tuple<Args...> extra_args;
+
+        SubscriberBuilder(Session& s, std::string t, Args&&... args)
+            : session(s), topic(std::move(t)), extra_args(std::forward<Args>(args)...) {}
+
+        template <typename Callback>
+        auto operator+(Callback&& callback) {
+            // Unpack the stored arguments (closure, etc.) and call the real function
+            return std::apply([&](auto&&... unpacked_args) {
+                return session.declare_subscriber(
+                    topic, 
+                    std::forward<Callback>(callback), 
+                    std::forward<decltype(unpacked_args)>(unpacked_args)...
+                );
+            }, extra_args);
+        }
+    };
+
+    template <typename Session, typename... Args>
+    SubscriberBuilder<Session, Args...> make_builder(Session& s, std::string t, Args&&... args) {
+        return SubscriberBuilder<Session, Args...>(s, std::move(t), std::forward<Args>(args)...);
+    }
+}
 
 
+#define ZENOH_DECLARE_PUBLISHER(session, publisher, ...) \
+    auto publisher = session.declare_publisher(__VA_ARGS__)
 
-#define DSL_SUBINT(VarName, LBound, UBound)                                                         \
-    int VarName = LBound;                                                                           \
-    static AutoRegister _reg_subint_##VarName(#VarName, &VarName, LBound, UBound);                  \
-    static ScopeAutoReg _reg_subint_stmt_##VarName(ScopeTokenType::VAR_DECL, #VarName);                
+#define ZENOH_DECLARE_SUBSCRIBER(session, subscriber, topic, ...)       \
+    auto subscriber = sub_macro::make_builder(session, topic, ##__VA_ARGS__) +
+
+#define BEGIN {
+
+#define END }
+
+#define ZENOH_PUT(pub, ...) \
+    pub.put(__VA_ARGS__)
 
 
-#define DSL_BOOL(BoolName, InitialValue)                                                            \
-    bool BoolName = InitialValue;                                                                   \
-    static AutoRegister _reg_bool_##BoolName(#BoolName, InitialValue);                            \
-    static ScopeAutoReg _reg_bool_stmt_##VarName(ScopeTokenType::VAR_DECL, #BoolName);                
+#define DSL_DECLARE_ENUM(EnumName, ...)                                       \
+    enum class EnumName {__VA_ARGS__};                                                               
+    
+#define DSL_ENUM_VAR(EnumName, VarName, Enum)       \
+    EnumName VarName = EnumName::Enum
+
+#define DSL_SUBINT(VarName, LBound, UBound)                      \
+    int VarName = LBound;                                                                              
 
 
-// 1. Function Definition
-// Creates a local vector, sets up the context, and returns the vector at the end.
-#define BEHAVIOR(funcName)                                                      \
-    static ScopeAutoReg _begin_fn_##funcName(#funcName);                        \
-    static ScopeAutoReg _begin_scope_##funcName(ScopeTokenType::BEGIN_SCOPE);   \
-    constexpr void funcName()  {                                                \
-        /* User code follows */
+#define DSL_BOOL(BoolName, InitialValue)                            \
+    bool BoolName = InitialValue;
+    
+#define DSL_SET(expr) expr
 
-#define END_BEHAVIOR                                                        \
-    }                                                                       \
-    static ScopeAutoReg(ScopeTokenType::END_SCOPE);
-
-// TODO isimsiz degiskenler hata verecek
-
-#define DSL_BEGIN_GUARD(expr)                                   \
-    static_assert(validate(#expr), "Valid");                        \
-    static ScopeAutoReg(ScopeTokenType::IF_STMT, #expr);            \
-    static ScopeAutoReg(ScopeTokenType::BEGIN_SCOPE);               \
-    if (expr)
-
-#define DSL_END_GUARD \
-    static ScopeAutoReg(ScopeTokenType::END_SCOPE);
+#define DSL_GUARD(expr) if (expr)
