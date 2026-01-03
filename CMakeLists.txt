@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(ZenohDezyneWrapper)
+project(ZenohDezyneTranslator)
 
 # Clangd Setup
 # This command tells CMake to generate the
