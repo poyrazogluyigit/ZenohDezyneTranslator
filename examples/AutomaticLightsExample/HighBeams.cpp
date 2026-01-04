@@ -12,16 +12,19 @@ int main(){
     zenoh::Config config = zenoh::Config::create_default();
     auto session = zenoh::Session::open(std::move(config));
 
+    // create publisher that sends high beams status
+    auto pub = session.declare_publisher("autoLights/ctl/highBeams/reply");
+
     ZENOH_DECLARE_SUBSCRIBER(session, highBeamsTurnOn,
         "autoLights/highBeams/turnOn", zenoh::closures::none)
         [&](zenoh::Sample &sample) {
-            std::cout << "High beams turned on" << std::endl;
+            pub.put("High beams turned on");
         };
     
         ZENOH_DECLARE_SUBSCRIBER(session, highBeamsTurnOff,
         "autoLights/highBeams/turnOff", zenoh::closures::none)  
         [&](zenoh::Sample &sample) {
-            std::cout << "High beams turned off" << std::endl;
+            pub.put("High beams turned off");
         };
 
     while(true) {

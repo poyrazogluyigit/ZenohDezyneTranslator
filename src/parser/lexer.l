@@ -15,7 +15,8 @@
 "DSL_ENUM_VAR"              { return TOK_ENUM_VAR; }
 "DSL_SUBINT"                { return TOK_SUBINT; }
 "DSL_BOOL"                  { return TOK_BOOL; }
-"DSL_GUARD"                 { return TOK_GUARD; }
+"DSL_IF"                    { return TOK_GUARD; }
+"DSL_ELSE_IF"               { return TOK_GUARD; }
 "DSL_SET"                   { return TOK_SET; }
 "ZENOH_DECLARE_SUBSCRIBER"  { return TOK_DECLARE_SUB; }
 "ZENOH_DECLARE_PUBLISHER"   { return TOK_DECLARE_PUB; }

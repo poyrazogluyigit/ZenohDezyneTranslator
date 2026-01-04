@@ -18,9 +18,15 @@ int main(){
     ZENOH_DECLARE_PUBLISHER(session, carDetectedPub, "autoLights/frontCamera/carDetected");
     ZENOH_DECLARE_PUBLISHER(session, carPassedPub, "autoLights/frontCamera/carPassed");
 
-    std::this_thread::sleep_for(50s);
-    ZENOH_PUT(carDetectedPub, "Car detected");
-    std::cout << "Car detected" << std::endl;
+    auto ctlPub = session.declare_publisher("autoLights/ctl/frontCamera/reply");
+
+    auto ctlSub = session.declare_subscriber(
+        "autoLights/ctl/frontCamera",
+        [&](const zenoh::Sample &sample) {
+            auto command = sample.get_payload().as_string();
+            if (command == "carDetected") carDetectedPub.put("carDetected");
+            else if(command == "carPassed") carPassedPub.put("carPassed");
+        }, zenoh::closures::none);
 
 
     while(true) {

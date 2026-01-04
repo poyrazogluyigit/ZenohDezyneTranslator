@@ -15,9 +15,14 @@ int main(){
     ZENOH_DECLARE_PUBLISHER(session, lightSensorLow, "autoLights/lightSensor/lowLight");
     ZENOH_DECLARE_PUBLISHER(session, lightSensorHigh, "autoLights/lightSensor/highLight");
 
-    std::this_thread::sleep_for(20s);
-    ZENOH_PUT(lightSensorLow, "Low light");
-    std::cout << "Low light" << std::endl;
+    auto ctlPub = session.declare_publisher("autoLights/ctl/lightSensor/reply");
+    auto ctlSub = session.declare_subscriber(
+        "autoLights/ctl/lightSensor",
+        [&](const zenoh::Sample &sample) {
+            auto command = sample.get_payload().as_string();
+            if (command == "lowLight") lightSensorLow.put("lowLight");
+            else if(command == "highLight") lightSensorHigh.put("highLight");
+        }, zenoh::closures::none);
 
     while(true) {
         std::this_thread::sleep_for(20s);

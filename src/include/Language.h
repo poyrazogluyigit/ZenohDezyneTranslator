@@ -66,4 +66,9 @@ namespace sub_macro {
     
 #define DSL_SET(expr) expr
 
+// FIXME These guards don't have any mutex in c++
 #define DSL_GUARD(expr) if (expr)
+
+#define DSL_IF(expr) if (expr)
+
+#define DSL_ELSE_IF(expr) else if (expr)

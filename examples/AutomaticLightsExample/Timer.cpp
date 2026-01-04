@@ -1,4 +1,3 @@
-#include <iostream>
 #include <functional>
 #include <chrono>
 #include <atomic>
@@ -44,30 +43,35 @@ int main() {
     auto config = zenoh::Config::create_default();
     auto session = zenoh::Session::open(std::move(config));
 
+    auto ctlPub = session.declare_publisher("autoLights/ctl/lightsTimer/reply");
+
     std::shared_ptr<TimerThread> th;
-    ZENOH_DECLARE_PUBLISHER(session, pub, "autoLights/lightsTimer/Timeout");
+    ZENOH_DECLARE_PUBLISHER(session, pub, "autoLights/lightsTimer/timeout");
 
     // Subscriber for timer create
     ZENOH_DECLARE_SUBSCRIBER(session, timerCreateSub, 
         "autoLights/lightsTimer/create", zenoh::closures::none)
-        [&pub, &th, &session](const zenoh::Sample &sample) {
+        [&pub, &th, &ctlPub, &session](const zenoh::Sample &sample) {
+            if (th) {
+                stop(th); 
+            }
             std::string message = sample.get_payload().as_string();
             int time = std::stoi(message);
             th = start(Interval(time), [&]() {
-                pub.put("Timeout");
-                std::cout << "Timeout" << std::endl;
+                ZENOH_PUT(pub, "Timeout");
+                ctlPub.put("Timeout");
             });
-            std::cout << "Timer armed for " << time << " ms" << std::endl;
+            ctlPub.put("Timer created for " + std::to_string(time) + " ms");
         };
 
     // Subscriber for timer cancel
     ZENOH_DECLARE_SUBSCRIBER(session, timerCancelSub, "autoLights/lightsTimer/cancel",
         zenoh::closures::none)
-        [&pub, &th](const zenoh::Sample &sample) {
+        [&ctlPub, &th](const zenoh::Sample &sample) {
             std::string message = sample.get_payload().as_string();
             (void)message; // unused
             stop(th);
-            std::cout << "Timer cancelled" << std::endl;
+            ctlPub.put("Timer cancelled");
         };
 
     while(true) {
